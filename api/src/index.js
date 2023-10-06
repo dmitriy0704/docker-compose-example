@@ -13,6 +13,10 @@ app.get("/test", (req, res) => {
   res.send("Our api server is working correctly");
 });
 
+app.get("/testwithcurrentuser", (req, res) => {
+  
+})
+
 const startServer = () => {
   app.listen(port, () => {
     console.log(`Started api service on port ${port}`);
