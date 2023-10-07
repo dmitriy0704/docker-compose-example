@@ -5,15 +5,11 @@ const { port, host, db, authApiUrl } = require("./configuration");
 const { connectDb } = require("./helpers/db");
 
 const app = express();
-const kittySchema = new mongoose.Schema({
-  name: String
-});
-const Kitten = mongoose.model("Kitten", kittySchema);
 
 app.get("/test", (req, res) => {
   res.send("Our api server is working correctly");
 });
-
+ 
 app.get('/api/testapidata', (req, res)=> {
   res.json({
     testwithapi: true
