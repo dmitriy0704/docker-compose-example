@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const { port, host, db } = require("./configuration");
+const axios = require('axios');
+const { port, host, db, authApiUrl } = require("./configuration");
 const { connectDb } = require("./helpers/db");
 
 const app = express();
@@ -13,8 +14,19 @@ app.get("/test", (req, res) => {
   res.send("Our api server is working correctly");
 });
 
+app.get('/api/testapidata', (req, res)=> {
+  res.json({
+    testwithapi: true
+  })
+})
+
 app.get("/testwithcurrentuser", (req, res) => {
-  
+  axios.get(authApiUrl + '/currentUser').then(response => {
+    res.json({
+      testwithcurrentuser: true,
+      currentUserFromAuth: response.data
+    })
+  })  
 })
 
 const startServer = () => {
@@ -24,7 +36,7 @@ const startServer = () => {
     console.log(`Database url ${db}`);
 
     const silence = new Kitten({ name: "Silence" });
-    silence.save(function(err, result) {
+    silence.save(function (err, result) {
       if (err) return console.error(err);
       console.log("result with volumes", result);
     });
